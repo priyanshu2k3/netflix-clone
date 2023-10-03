@@ -1,0 +1,75 @@
+import NextAuth, { AuthOptions } from 'next-auth';
+import CredentialsProvider from "next-auth/providers/credentials";
+import Credentials from "next-auth/providers/credentials";
+import prismadb from '@/lib/prismadb';
+import { compare } from 'bcrypt' ;  
+
+import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
+
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+
+
+export const authOptions :AuthOptions= {
+  providers: [
+
+    //types of authentications 
+    GithubProvider({
+      clientId:process.env.GITHUB_ID ||"",
+      clientSecret:process.env.GITHUB_SECRET ||"",
+    }),
+    GoogleProvider({
+      clientId:process.env.GOOGLE_CLIENT_ID ||"",
+      clientSecret:process.env.GOOGLE_CLIENT_SECRET ||"",
+    }),
+    CredentialsProvider({
+      id:'credentials',
+      name:'credentials',
+      type: "credentials",
+      credentials: {
+        email: {  label: "Email",type: "email"},
+        password: { label: "Password", type: "password" },
+      },
+
+      //functions how to handel them
+
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password){
+          throw new Error('Email and Password required');
+        }
+        const credentialDetails = {
+          email: credentials.email,
+          password: credentials.password,
+        };
+        const user =await prismadb.user.findUnique({
+          where:{
+            email:credentials.email
+          }
+        });
+
+        if (!user || !user?.hashedPassword){
+          throw new Error('Email does not exist')
+        }
+
+        const ifCorrrectPassword=await compare(credentials.password,user.hashedPassword);
+        if (!ifCorrrectPassword){
+          throw new Error("incorrect  password")
+        }
+        return user ;
+
+      }
+    }),
+  ],
+pages:{signIn:'/auth',},
+debug:process.env.NODE_ENV === 'development',
+adapter:PrismaAdapter(prismadb),
+session: {strategy: "jwt",maxAge: 30 * 24 * 60 * 60,},
+jwt:{secret:process.env.NEXTAUTH_JWT_SECRET,},
+secret:process.env.NEXTAUTH_SECRET,
+
+
+
+
+};
+
+export default NextAuth(authOptions);
