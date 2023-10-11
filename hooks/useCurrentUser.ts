@@ -4,7 +4,7 @@ import fetcher from '@/lib/fetcher';
 
 const useCurrentUser = () => {
 
-  const { data, error, isLoading } = useSWR('/api/current',fetcher);
+  const { data, error, isLoading , mutate} = useSWR('/api/current',fetcher);
 
   // console.log(data,"ssdsdw45ds45d4s",error)
   // if (error) return (<div>failed to load</div>)
@@ -13,6 +13,7 @@ const useCurrentUser = () => {
     data,
     error,
     isLoading,
+    mutate,
   }
 };
 
