@@ -9,11 +9,14 @@ interface AccountMenuProps{
 visible? : boolean;
 }
 
+
 const AccountMenu:React.FC<AccountMenuProps>=({visible})=>{
-    if (!visible){
+    const { data: currentUser  } = useCurrentUser();
+
+    if (!visible ||!currentUser){
     return null ;
 }
- const { data: {currentUser}  } = useCurrentUser();
+ 
  console.log(currentUser.name,"in AccountMenu")
     
     return(
@@ -21,7 +24,7 @@ const AccountMenu:React.FC<AccountMenuProps>=({visible})=>{
             <div className="flex flex-col gap-3">
                 <div className="px-3 group/item flex flex-row gap-3 items-center w-full">
                     <Image className="w-8 rounded-md" src="/images/defaultImg.png" width={64} height={64} alt="avatar"/>
-                    <p className="text-white text-sm group-hover/item:underline">hello {currentUser.name}</p>
+                    <p className="text-white text-sm group-hover/item:underline">hello {currentUser.currentUser.name}</p>
                 </div>
             </div>
             <hr className="bg-gray-600 border-0 h-px my-4" />
