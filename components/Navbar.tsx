@@ -6,12 +6,13 @@ import AccountMenu from "@/components/AccountMenu"
 
 import {BsBell,BsChevronDown,BsSearch} from "react-icons/bs" 
 import { useCallback, useEffect, useState } from "react"
+import { useRouter } from "next/router"
 
 
 const TOP_OFFSET=66;
 const Navbar =()=>{
     
-
+    const router = useRouter()
     const [showMobileMenu,setShowMobileMenu]=useState(false)
     const [showAccountMenu, setShowAccountMenu] = useState(false);
     const [showBackground, setShowBackground] = useState(false);
@@ -31,16 +32,21 @@ const Navbar =()=>{
           }
     },[])
 
+    const scrollTo=(e:any)=>{
+        var body = document.body,
+        html = document.documentElement;
+        var height = Math.max( body.scrollHeight, body.offsetHeight,html.clientHeight, html.scrollHeight, html.offsetHeight );
+        scroll(0,height)
+    }
+
     return(<div className="w-full fixed z-40">
         <div className={`px-4 md:px-16 flex flex-row items-center transition duration-500 ${showBackground? 'bg-zinc-900 bg-opacity-90':''}`}>
             <Image className="h-4 lg:h-7 " src="/images/logo.png" alt="logo" width={70} height={32}/>
             <div className="flex-row ml-8 gap-7 hidden lg:flex ">
-                <Navbaritems label="home"/>
-                <Navbaritems label="Series"/>
-                <Navbaritems label="Film"/>
-                <Navbaritems label="New & Popular"/>
-                <Navbaritems label="My List "/>
-                <Navbaritems label="Browse By Languages"/>
+                <div onClick={()=>{scroll(0,0)}}><Navbaritems label="home"/></div>
+                <div onClick={(e)=>{scrollTo(e)}}><Navbaritems label="Trending Now"/></div>
+                <div onClick={(e)=>{scrollTo(e)}}><Navbaritems label="My List "/></div>
+                <div onClick={()=>{router.push('/profiles')}}><Navbaritems label="Profile"/></div>
             </div>
 
             <div onClick={()=>{setShowMobileMenu((current)=>!current)}}  className="lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative">

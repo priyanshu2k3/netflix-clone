@@ -13,7 +13,7 @@ const Billboard =()=>{
     },[openModal,data?.id])
 return(
 <div className="text-white relative h-[56.25vw]">
-    <video className="w-full h-[56.25vw] object-cover brightness-[60%] transition duration-500"  muted loop poster={data?.thumbnailUrl} src={data?.videoUrl}></video>
+    <video className="w-full h-[56.25vw] object-cover brightness-[60%] transition duration-500" autoPlay muted loop poster={data?.thumbnailUrl} src={data?.videoUrl}></video>
     <div className="absolute top-[30%] md:top-[40%] ml-4 md:ml-16">
         <p className=" text-1xl md:text-5xl h-full w-[50%] lg:text-6xl font-bold drop-shadow-xl">
           {data?.title}

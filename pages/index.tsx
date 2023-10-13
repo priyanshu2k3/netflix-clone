@@ -29,8 +29,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
 
 export default function Home() { 
-  // const {data:user}=useCurrentUser();
-  // console.log(user,"in the index.js")
+
 
   const { data : movies =[]}=useMovieList()
   const { data : favourites =[]}=useFavourites();
