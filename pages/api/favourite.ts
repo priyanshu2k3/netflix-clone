@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import Auth from '../auth'
 import { without } from 'lodash'
 import prismadb from '@/lib/prismadb'
 import serverAuth from '@/lib/serverAuth'
@@ -10,7 +9,7 @@ export default async function handler(  req: NextApiRequest,res: NextApiResponse
   try {
 
     //common checks ⬇️⬇️⬇️
-    const {currentUser}= await serverAuth(req)
+    const {currentUser}= await serverAuth(req,res)
     const {movieId}=req.body;
     const existingMovie= await prismadb.movie.findUnique({
         where:{

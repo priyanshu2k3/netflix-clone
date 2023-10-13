@@ -2,10 +2,12 @@ import {getSession,signOut} from 'next-auth/react';
 import { NextPageContext } from 'next';
 import useCurrentUser from '@/hooks/useCurrentUser';
 import Navbar from '@/components/Navbar';
-import Billboard from '@/components/Bullboard';
+import Billboard from '@/components/Billboard';
 import MovieList from '@/components/MovieList';
 import useMovieList from '@/hooks/useMovieList';
 import useFavourites from '@/hooks/useFavourites'
+import InfoModal from '@/components/InfoModal';
+import useInfoModal from '@/hooks/useInfoModal';
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -27,14 +29,18 @@ export async function getServerSideProps(context: NextPageContext) {
 
 
 export default function Home() { 
-  const {data:user}=useCurrentUser();
-  console.log(user)
+  // const {data:user}=useCurrentUser();
+  // console.log(user,"in the index.js")
 
   const { data : movies =[]}=useMovieList()
   const { data : favourites =[]}=useFavourites();
+  const {isOpen,closeModal}=useInfoModal(); 
+
+  console.log("in the index.js",movies,favourites)
 
   return (
     <div>
+      <InfoModal visible={isOpen}  onClose={closeModal}/>
       <Navbar/>
       <Billboard/>
       <div className='pb-40'>

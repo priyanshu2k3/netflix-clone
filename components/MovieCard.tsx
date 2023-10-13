@@ -5,7 +5,7 @@ import { BsPlayCircleFill } from "react-icons/bs";
 
 // import { MovieInterface } from "@/types/Index";
 import FavoriteButton from '@/components/FavouriteButton';
-// import useInfoModalStore from '@/hooks/useInfoModalStore';
+import useInfoModal from '@/hooks/useInfoModal';
 
 interface MovieCardProps {
   data:{
@@ -21,7 +21,7 @@ interface MovieCardProps {
 
 const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
   const router = useRouter();
-//   const { openModal } = useInfoModalStore();
+  const { openModal } = useInfoModal();
 
   const redirectToWatch = useCallback(() => router.push(`/watch/${data.id}`), [router, data.id]);
 
@@ -82,8 +82,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
             <div onClick={redirectToWatch} className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300">
               <BsPlayCircleFill className="text-black w-4 lg:w-6" />
             </div>
-            <FavoriteButton movieId={data.id} />
-            <div  className="cursor-pointer ml-auto group/item w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex justify-center items-center transition hover:border-neutral-300">
+            <FavoriteButton movieId={data?.id} />
+            <div onClick={()=>{openModal(data?.id)}} className="cursor-pointer ml-auto group/item w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex justify-center items-center transition hover:border-neutral-300">
               <BsChevronCompactDown className="text-white group-hover/item:text-neutral-300 w-4 lg:w-6" />
             </div>
           </div>
