@@ -6,6 +6,7 @@ import {signIn} from 'next-auth/react';
 import {FcGoogle} from 'react-icons/fc';
 import {FaGithub} from 'react-icons/fa'
 import { callbackify } from "util";
+import Image from "next/image";
 
 const Auth =()=>{
     const [email,setEmail]=useState("");
@@ -46,7 +47,7 @@ const Auth =()=>{
         <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
             <div className="bg-black w-full h-full lg:bg-opacity-50">
                 <nav className="px-12 py-5">
-                    <img src="/images/logo.png" className="h-12" alt="logo"/>
+                    <Image src="/images/logo.png" className="h-12" height={12} width={100} alt="logo"/>
                     <div className="flex justify-center ">
                         <div className="bg-black bg-opacity-70 px-16 py-16 self-center mt-2 lg:w-2/5 lg:max-e-md rounded-md w-full">
                             <h2 className="text-white text-4xl mb-8 font-semibold">

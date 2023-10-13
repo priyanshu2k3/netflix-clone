@@ -13,11 +13,11 @@ visible? : boolean;
 const AccountMenu:React.FC<AccountMenuProps>=({visible})=>{
     const { data: currentUser  } = useCurrentUser();
 
-    if (!visible ||!currentUser){
+    if (!visible){
     return null ;
 }
  
- console.log(currentUser.name,"in AccountMenu")
+//  console.log(currentUser.name,"in AccountMenu")
     
     return(
         <div className="bg-black w-56 absolute top-14 right-0 py-5 flex-col border-2 border-gray-800 flex">

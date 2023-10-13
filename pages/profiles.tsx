@@ -3,6 +3,8 @@ import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 
+import Image from "next/image";
+
 import useCurrentUser from "@/hooks/useCurrentUser";
 
 
@@ -38,7 +40,9 @@ return(
             <div onClick={()=>{router.push("/")}}>
                 <div className="group flex-row w-44 mx-auto">
                     <div className=" text-white w-44 h-44 rounded-md  border-2 border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden">
-                        <img src="./images/defaultImg.png" alt="Profile" />
+                       
+                        <Image src="/images/defaultImg.png" alt="Profile" height={44*6} width={44*6} />
+
                     </div>
                     <div className="mt-4 text-gray-400 text-2xl text-center group-hover:text-white-300">
                         {currentUser?.currentUser?.name}
